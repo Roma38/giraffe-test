@@ -26,7 +26,7 @@
       </b-card>
     </div>
 
-    <b-pagination align="center" :total-rows="ads.length" v-model="currentPage" :per-page="5" aria-controls="adCards"></b-pagination>
+    <b-pagination v-if="ads.length > 5" align="center" :total-rows="ads.length" v-model="currentPage" :per-page="5" aria-controls="adCards"></b-pagination>
     
     <router-link to="/edit" tag="b-button" class="create-btn" v-if="authorized">Create Ad</router-link>
   </div>
@@ -48,8 +48,9 @@ export default {
   },
   computed: {
     shownAds() {
-      return this.ads.slice(this.currentPage * 5 - 5, this.currentPage * 5);
-    }
+      return this.ads.length > 5 ? this.ads.slice(this.currentPage * 5 - 5, this.currentPage * 5) : this.ads;
+    },
+
   },
   methods: {
     onSubmit() {

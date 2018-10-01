@@ -1,6 +1,6 @@
 <template>
   <b-form @submit.prevent="onSubmit" class="border rounded my-3 p-3 container" v-if="userName">
-    <h2 class="m-3">Create Ad</h2>
+    <h2 class="m-3">{{ adId ? 'Edit' : 'Create' }} Ad</h2>
 
     <b-form-group label="Title: " horizontal label-text-align="sm-right">
       <b-col col md="8">
@@ -33,8 +33,14 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route.params.id)
     if (this.$route.params.id) {
       const ad = this.ads.find(ad => ad.id === this.adId);
+
+      if (ad.authorName !== this.userName) {
+        this.$router.push('/');
+      }
+
       this.title = ad.title;
       this.description = ad.description;
     }
